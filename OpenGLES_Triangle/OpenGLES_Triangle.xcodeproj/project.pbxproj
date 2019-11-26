@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A71C47B6238D7FF1003FDCAF /* 001.JPG in Resources */ = {isa = PBXBuildFile; fileRef = A71C47B5238D7FF1003FDCAF /* 001.JPG */; };
+		A71C47B8238D82F4003FDCAF /* cTest.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A71C47B7238D82F4003FDCAF /* cTest.jpg */; };
 		A7D758B3238C1DC9001F0AE7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A7D758B2238C1DC9001F0AE7 /* AppDelegate.m */; };
 		A7D758B6238C1DC9001F0AE7 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A7D758B5238C1DC9001F0AE7 /* SceneDelegate.m */; };
 		A7D758B9238C1DC9001F0AE7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7D758B8238C1DC9001F0AE7 /* ViewController.m */; };
@@ -17,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A71C47B5238D7FF1003FDCAF /* 001.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 001.JPG; sourceTree = "<group>"; };
+		A71C47B7238D82F4003FDCAF /* cTest.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cTest.jpg; sourceTree = "<group>"; };
 		A7D758AE238C1DC9001F0AE7 /* OpenGLES_Triangle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenGLES_Triangle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7D758B1238C1DC9001F0AE7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A7D758B2238C1DC9001F0AE7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -61,6 +65,8 @@
 		A7D758B0238C1DC9001F0AE7 /* OpenGLES_Triangle */ = {
 			isa = PBXGroup;
 			children = (
+				A71C47B7238D82F4003FDCAF /* cTest.jpg */,
+				A71C47B5238D7FF1003FDCAF /* 001.JPG */,
 				A7D758B1238C1DC9001F0AE7 /* AppDelegate.h */,
 				A7D758B2238C1DC9001F0AE7 /* AppDelegate.m */,
 				A7D758B4238C1DC9001F0AE7 /* SceneDelegate.h */,
@@ -134,8 +140,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A7D758C1238C1DCC001F0AE7 /* LaunchScreen.storyboard in Resources */,
+				A71C47B6238D7FF1003FDCAF /* 001.JPG in Resources */,
 				A7D758BE238C1DCC001F0AE7 /* Assets.xcassets in Resources */,
 				A7D758BC238C1DC9001F0AE7 /* Main.storyboard in Resources */,
+				A71C47B8238D82F4003FDCAF /* cTest.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,6 +299,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KV3LVFR74A;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = OpenGLES_Triangle/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -308,6 +317,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KV3LVFR74A;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = OpenGLES_Triangle/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
