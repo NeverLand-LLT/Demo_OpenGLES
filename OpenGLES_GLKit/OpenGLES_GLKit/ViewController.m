@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import <GLKit/GLKit.h>
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -100,7 +101,7 @@
 
 - (void)uploadTexture {
     /// 加载纹理
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"001.JPG" ofType:nil];
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"source.JPG" ofType:nil];
     // 因为图片读取的方向是 左上角为原点，x右边、y下边为正。 而OpenGLEST的纹理读取是做左下角为原点，x右、y上边边为正。 GLKTextureInfo，加载为了修改放心，需要制定Options  BottomLeft为YES
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:@(1), GLKTextureLoaderOriginBottomLeft, nil];
     // 加载
@@ -123,7 +124,7 @@
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect {
     /// 清理FBO内容 FBO在这里没有体现到，因为GLKit内部创建好了，FBO可以想象为一个画布
     // 指定清理画布填充颜色
-    glClearColor(0.3f, 0.6f, 1.0f, 1.0f);
+    glClearColor(1.0f, 1.0f, 0.886f, 1.0f);
     // 执行清理
     glClear(GL_COLOR_BUFFER_BIT);
 

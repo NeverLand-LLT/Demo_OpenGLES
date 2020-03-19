@@ -1,9 +1,9 @@
 //
 //  SceneDelegate.h
-//  OpenGLES_Triangle
+//  OpenGLES_GLKit
 //
-//  Created by Melody on 2019/11/25.
-//  Copyright © 2019 Melody. All rights reserved.
+//  Created by Melody on 2020/3/19.
+//  Copyright © 2020 Melody. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
