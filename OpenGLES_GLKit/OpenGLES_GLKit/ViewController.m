@@ -109,7 +109,7 @@
     GLKTextureInfo *textureInfo = [GLKTextureLoader textureWithContentsOfFile:filePath options:options error:&error];
     if (error) {
         NSLog(@"Error:GLKTextureLoader 加载图片纹理失败:%@", error);
-        return;
+        exit(1);
     }
     // 着色器
     _mEffect = [[GLKBaseEffect alloc] init];
