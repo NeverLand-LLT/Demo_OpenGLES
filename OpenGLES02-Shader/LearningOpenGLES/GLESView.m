@@ -150,17 +150,19 @@
 //        -0.5f, 0.5f,   -1.0f,   0.0f,   1.0f,
 //        0.5f,  -0.5f,  -1.0f,   1.0f,   0.0f,
 //    };
-    
-    // 为什么会翻转？ 是因为纹理的原点在左下角 与 顶点坐标有区别。 但是在GPUIMAge中，有处理
+
+    /** 为什么会翻转？ 是因为纹理的原点在左下角 与 顶点坐标有区别。 但是在GPUIMAge中是有处理，所以直接使用相同坐标。
+     在项目中，要解决上下翻转也很简单， 只需要 y = 1.0 - y
+     */
     GLfloat vertexs[] =
-      {
-          0.5f,  -0.5f,  -1.0f,   1.0f,  1.0 - 0.0f,
-          -0.5f, 0.5f,   -1.0f,   0.0f,  1.0 - 1.0f,
-          -0.5f, -0.5f,  -1.0f,   0.0f,  1.0 - 0.0f,
-          0.5f,  0.5f,   -1.0f,   1.0f,  1.0 - 1.0f,
-          -0.5f, 0.5f,   -1.0f,   0.0f,  1.0 - 1.0f,
-          0.5f,  -0.5f,  -1.0f,   1.0f,  1.0 - 0.0f,
-      };
+    {
+        0.5f,  -0.5f,  -1.0f,   1.0f,   1.0 - 0.0f,
+        -0.5f, 0.5f,   -1.0f,   0.0f,   1.0 - 1.0f,
+        -0.5f, -0.5f,  -1.0f,   0.0f,   1.0 - 0.0f,
+        0.5f,  0.5f,   -1.0f,   1.0f,   1.0 - 1.0f,
+        -0.5f, 0.5f,   -1.0f,   0.0f,   1.0 - 1.0f,
+        0.5f,  -0.5f,  -1.0f,   1.0f,   1.0 - 0.0f,
+    };
 
     // 上传顶点数据
     GLuint vertexBuffer; // VBO
@@ -231,7 +233,6 @@
 
     glBindTexture(GL_TEXTURE_2D, 0);
 
-
     // 指定纹理拉伸、缩放处理
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -258,7 +259,7 @@
 - (GLuint)loadShaders {
     GLuint vertShader, fragShader;
     GLint program = glCreateProgram();
-    
+
     NSString *shaderName = @"shader";
     // 编译
     [self compileShader:&vertShader type:GL_VERTEX_SHADER shaderName:shaderName];

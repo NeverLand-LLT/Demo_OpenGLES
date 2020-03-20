@@ -18,6 +18,8 @@
 		CD6F553C24245C4B00BD6C32 /* source.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CD6F553724245C4B00BD6C32 /* source.jpg */; };
 		CD6F553D24245C4B00BD6C32 /* shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = CD6F553924245C4B00BD6C32 /* shader.fsh */; };
 		CD6F553E24245C4B00BD6C32 /* GLESView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD6F553A24245C4B00BD6C32 /* GLESView.m */; };
+		CD6F55462424659600BD6C32 /* GLESUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = CD6F55402424659600BD6C32 /* GLESUtils.m */; };
+		CD6F55472424659600BD6C32 /* GLESMath.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6F55422424659600BD6C32 /* GLESMath.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,12 @@
 		CD6F553824245C4B00BD6C32 /* GLESView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLESView.h; sourceTree = "<group>"; };
 		CD6F553924245C4B00BD6C32 /* shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader.fsh; sourceTree = "<group>"; };
 		CD6F553A24245C4B00BD6C32 /* GLESView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLESView.m; sourceTree = "<group>"; };
+		CD6F55402424659600BD6C32 /* GLESUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLESUtils.m; sourceTree = "<group>"; };
+		CD6F55412424659600BD6C32 /* Quaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quaternion.h; sourceTree = "<group>"; };
+		CD6F55422424659600BD6C32 /* GLESMath.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = GLESMath.c; sourceTree = "<group>"; };
+		CD6F55432424659600BD6C32 /* GLESUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLESUtils.h; sourceTree = "<group>"; };
+		CD6F55442424659600BD6C32 /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
+		CD6F55452424659600BD6C32 /* GLESMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLESMath.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,10 +78,11 @@
 		CD6F551C24245BF400BD6C32 /* LearningOpenGLES */ = {
 			isa = PBXGroup;
 			children = (
+				CD6F553F2424659600BD6C32 /* Utils */,
 				CD6F553824245C4B00BD6C32 /* GLESView.h */,
 				CD6F553A24245C4B00BD6C32 /* GLESView.m */,
-				CD6F553924245C4B00BD6C32 /* shader.fsh */,
 				CD6F553624245C4B00BD6C32 /* shader.vsh */,
+				CD6F553924245C4B00BD6C32 /* shader.fsh */,
 				CD6F553724245C4B00BD6C32 /* source.jpg */,
 				CD6F551D24245BF400BD6C32 /* AppDelegate.h */,
 				CD6F551E24245BF400BD6C32 /* AppDelegate.m */,
@@ -88,6 +97,19 @@
 				CD6F552F24245BF600BD6C32 /* main.m */,
 			);
 			path = LearningOpenGLES;
+			sourceTree = "<group>";
+		};
+		CD6F553F2424659600BD6C32 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				CD6F55432424659600BD6C32 /* GLESUtils.h */,
+				CD6F55402424659600BD6C32 /* GLESUtils.m */,
+				CD6F55412424659600BD6C32 /* Quaternion.h */,
+				CD6F55442424659600BD6C32 /* Vector.h */,
+				CD6F55452424659600BD6C32 /* GLESMath.h */,
+				CD6F55422424659600BD6C32 /* GLESMath.c */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -165,8 +187,10 @@
 			files = (
 				CD6F552524245BF400BD6C32 /* ViewController.m in Sources */,
 				CD6F551F24245BF400BD6C32 /* AppDelegate.m in Sources */,
+				CD6F55472424659600BD6C32 /* GLESMath.c in Sources */,
 				CD6F553E24245C4B00BD6C32 /* GLESView.m in Sources */,
 				CD6F553024245BF600BD6C32 /* main.m in Sources */,
+				CD6F55462424659600BD6C32 /* GLESUtils.m in Sources */,
 				CD6F552224245BF400BD6C32 /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,6 +1,8 @@
 attribute vec4 position;
 attribute vec2 textureCoordinate;
-uniform mat4 rotateMatrix;
+//attribute vec4 positionColor;
+uniform mat4 projectionMatrix;
+uniform mat4 modelViewMatrix;
 
 varying lowp vec2 varyTextCoord;
 
@@ -10,8 +12,8 @@ void main()
     
     vec4 vPos = position;
 
-    vPos = vPos * rotateMatrix;
+    vPos = projectionMatrix * modelViewMatrix * position;
 
-    gl_Position = vPos;
+    gl_Position = position;
 }
 
