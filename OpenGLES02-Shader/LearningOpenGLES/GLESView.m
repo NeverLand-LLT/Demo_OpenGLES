@@ -13,16 +13,16 @@
 
 @interface GLESView ()
 
-/** <# 注释 #> */
+/** OpenGLEST 上下文 */
 @property (nonatomic, strong) EAGLContext *mContext;
-/** <# 注释 #> */
+/** OpenGLEST Layer */
 @property (nonatomic, strong) CAEAGLLayer *mEaglLayer;
-/** <# 注释 #> */
+/** OpenGLEST programe */
 @property (nonatomic, assign) GLuint mProgram;
 
-/** <# 注释 #> */
+/** 渲染Buffer句柄 */
 @property (nonatomic, assign) GLuint mColorRenderBuffer;
-/** <# 注释 #> */
+/** 帧缓存Buffer句柄 */
 @property (nonatomic, assign) GLuint mColorFrameBuffer;
 
 @end
