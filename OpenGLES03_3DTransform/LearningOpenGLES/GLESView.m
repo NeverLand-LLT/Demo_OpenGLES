@@ -183,41 +183,41 @@
     [self setupTexture:@"source.jpg"];
 
     // Uniform
-//    GLuint projectionMatrixSlot = glGetUniformLocation(self.mProgram, "projectionMatrix");
-//    GLuint modelViewMatrixSlot = glGetUniformLocation(self.mProgram, "modelViewMatrix");
-//
-//    float width = self.frame.size.width;
-//    float height = self.frame.size.height;
-//
-//    KSMatrix4 _projectionMatrix;
-//    ksMatrixLoadIdentity(&_projectionMatrix);
-//    float aspect = width / height;    //长宽比
-//
-//    ksPerspective(&_projectionMatrix, 30.0, aspect, 5.0f, 20.0f);    //透视变换，视角30°
-//
-//    //设置glsl里面的投影矩阵
-//    glUniformMatrix4fv(projectionMatrixSlot, 1, GL_FALSE, (GLfloat *)&_projectionMatrix.m[0][0]);
-//
-//    glEnable(GL_CULL_FACE);
-//
-//    KSMatrix4 _modelViewMatrix;
-//    ksMatrixLoadIdentity(&_modelViewMatrix);
-//
-//    //平移
-//    ksTranslate(&_modelViewMatrix, 0.0, 0.0, -10.0);
-//    KSMatrix4 _rotationMatrix;
-//    ksMatrixLoadIdentity(&_rotationMatrix);
-//
-//    //旋转
-//    ksRotate(&_rotationMatrix, degree, 1.0, 0.0, 0.0);     //绕X轴
-//    ksRotate(&_rotationMatrix, yDegree, 0.0, 1.0, 0.0);     //绕Y轴
-//
-//    //把变换矩阵相乘，注意先后顺序
-//    ksMatrixMultiply(&_modelViewMatrix, &_rotationMatrix, &_modelViewMatrix);
-//    //    ksMatrixMultiply(&_modelViewMatrix, &_modelViewMatrix, &_rotationMatrix);
-//
-//    // Load the model-view matrix
-//    glUniformMatrix4fv(modelViewMatrixSlot, 1, GL_FALSE, (GLfloat *)&_modelViewMatrix.m[0][0]);
+    GLuint projectionMatrixSlot = glGetUniformLocation(self.mProgram, "projectionMatrix");
+    GLuint modelViewMatrixSlot = glGetUniformLocation(self.mProgram, "modelViewMatrix");
+
+    float width = self.frame.size.width;
+    float height = self.frame.size.height;
+
+    KSMatrix4 _projectionMatrix;
+    ksMatrixLoadIdentity(&_projectionMatrix);
+    float aspect = width / height;    //长宽比
+
+    ksPerspective(&_projectionMatrix, 30.0, aspect, 5.0f, 20.0f);    //透视变换，视角30°
+
+    //设置glsl里面的投影矩阵
+    glUniformMatrix4fv(projectionMatrixSlot, 1, GL_FALSE, (GLfloat *)&_projectionMatrix.m[0][0]);
+
+    glEnable(GL_CULL_FACE);
+
+    KSMatrix4 _modelViewMatrix;
+    ksMatrixLoadIdentity(&_modelViewMatrix);
+
+    //平移
+    ksTranslate(&_modelViewMatrix, 0.0, 0.0, -10.0);
+    KSMatrix4 _rotationMatrix;
+    ksMatrixLoadIdentity(&_rotationMatrix);
+
+    //旋转
+    ksRotate(&_rotationMatrix, degree, 1.0, 0.0, 0.0);     //绕X轴
+    ksRotate(&_rotationMatrix, yDegree, 0.0, 1.0, 0.0);     //绕Y轴
+
+    //把变换矩阵相乘，注意先后顺序
+    ksMatrixMultiply(&_modelViewMatrix, &_rotationMatrix, &_modelViewMatrix);
+    //    ksMatrixMultiply(&_modelViewMatrix, &_modelViewMatrix, &_rotationMatrix);
+
+    // Load the model-view matrix
+    glUniformMatrix4fv(modelViewMatrixSlot, 1, GL_FALSE, (GLfloat *)&_modelViewMatrix.m[0][0]);
 
     glDrawArrays(GL_TRIANGLES, 0, 6);
 
