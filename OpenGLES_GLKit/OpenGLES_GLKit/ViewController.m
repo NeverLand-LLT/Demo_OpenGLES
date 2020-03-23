@@ -22,6 +22,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    // 通过GLKit 简单实现OpenGLES 绘制
+    
     // 1.设置OpenGLES 配置
     [self setupConfig];
     //2. 加载顶点数据

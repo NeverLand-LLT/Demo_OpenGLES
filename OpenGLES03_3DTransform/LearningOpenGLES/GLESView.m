@@ -170,6 +170,7 @@
 
     GLuint position = glGetAttribLocation(self.mProgram, "position");
     glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 8, (GLfloat *)NULL);
+    
     glEnableVertexAttribArray(position);
 
     GLuint positionColor = glGetAttribLocation(self.mProgram, "positionColor");
