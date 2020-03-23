@@ -19,11 +19,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-//    self.view = (GLESView *)self.myView
-//    self.myView = (GLESView *)self.myView;
-//    
-//    self.myView
-//    [self.view addSubview:self.myView];
 }
 
 @end

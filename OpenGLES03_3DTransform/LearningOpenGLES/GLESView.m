@@ -164,12 +164,12 @@
 
     // 上传顶点数据
     GLuint vertexBuffer; // VBO
-    glGenBuffers(1, &vertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexs), vertexs, GL_STATIC_DRAW);
+    glGenBuffers(1, &vertexBuffer); // 申请一个标识符
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer); //把标识符绑定在GL_ARRAY_BUFFER
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexs), vertexs, GL_STATIC_DRAW); // 把顶点数据从cpu复制到gpu中
 
     GLuint position = glGetAttribLocation(self.mProgram, "position");
-    glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 5, (GLfloat *)NULL);
+    glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 5, (GLfloat *)NULL); 
     glEnableVertexAttribArray(position);
 
     GLuint textureCoordinate = glGetAttribLocation(self.mProgram, "textureCoordinate");
