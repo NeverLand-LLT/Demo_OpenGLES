@@ -68,7 +68,6 @@
     [EAGLContext setCurrentContext:self.mContext];
     glEnable(GL_DEPTH_TEST); ///!!!
 
-
 //    self.view.backgroundColor = [UIColor orangeColor];
 }
 
@@ -76,11 +75,11 @@
     //顶点数据，前三个是顶点坐标， 中间三个是顶点颜色，    最后两个是纹理坐标
     GLfloat attrArr[] =
     {
-        -0.5f, 0.5f,   0.0f,  0.0f, 0.0f,       0.5f, 0.0f, 1.0f,   //左上
-        0.5f,  0.5f,   0.0f,  0.0f, 0.5f,       0.0f, 1.0f, 1.0f,   //右上
-        -0.5f, -0.5f,  0.0f,  0.5f, 0.0f,       1.0f, 0.0f, 0.0f,   //左下
-        0.5f,  -0.5f,  0.0f,  0.0f, 0.0f,       0.5f, 1.0f, 0.0f,   //右下
-        0.0f,  0.0f,   1.0f,  1.0f, 1.0f,       1.0f, 0.5f, 0.5f,   //顶点
+        -0.5f, 0.5f,   0.0f,   0.0f,  0.0f, 0.5f,       0.0f, 1.0f, //左上
+        0.5f,  0.5f,   0.0f,   0.0f,  0.5f, 0.0f,       1.0f, 1.0f, //右上
+        -0.5f, -0.5f,  0.0f,   0.5f,  0.0f, 1.0f,       0.0f, 0.0f, //左下
+        0.5f,  -0.5f,  0.0f,   0.0f,  0.0f, 0.5f,       1.0f, 0.0f, //右下
+        0.0f,  0.0f,   1.0f,   1.0f,  1.0f, 1.0f,       0.5f, 0.5f, //顶点
     };
     //顶点索引
     GLuint indices[] =
@@ -135,18 +134,18 @@
     self.mEffect.texture2d0.enabled = GL_TRUE;
     // 绑定纹理句柄
     self.mEffect.texture2d0.name = textureInfo.name;
-    
-    
+
     //初始的投影
     CGSize size = self.view.bounds.size;
     float aspect = fabs(size.width / size.height);
+    // 透视投影变换
     GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(90.0), aspect, 0.1f, 10.f);
     projectionMatrix = GLKMatrix4Scale(projectionMatrix, 1.0f, 1.0f, 1.0f);
     self.mEffect.transform.projectionMatrix = projectionMatrix;
-    
+    // 平移变换
     GLKMatrix4 modelViewMatrix = GLKMatrix4Translate(GLKMatrix4Identity, 0.0f, 0.0f, -2.0f);
     self.mEffect.transform.modelviewMatrix = modelViewMatrix;
-    
+
     //定时器
     double delayInSeconds = 0.1;
     timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
@@ -155,7 +154,6 @@
         self.mDegreeX += 0.1  * self.mBoolX;
         self.mDegreeY += 0.1 * self.mBoolY;
         self.mDegreeZ += 0.1 * self.mBoolZ;
-        [self update];
     });
     dispatch_resume(timer);
 }
@@ -164,28 +162,28 @@
 
 - (IBAction)changeXValue:(id)sender {
     self.mBoolX = !self.mBoolX;
-
 }
 
 - (IBAction)changeYValue:(id)sender {
     self.mBoolY = !self.mBoolY;
-
 }
 
 - (IBAction)changeZValue:(id)sender {
     self.mBoolZ = !self.mBoolZ;
 }
 
+#pragma mark - GLKViewController
+
 /**
  *  场景数据变化
  */
 - (void)update {
     GLKMatrix4 modelViewMatrix = GLKMatrix4Translate(GLKMatrix4Identity, 0.0f, 0.0f, -2.0f);
-    
+
     modelViewMatrix = GLKMatrix4RotateX(modelViewMatrix, self.mDegreeX);
     modelViewMatrix = GLKMatrix4RotateY(modelViewMatrix, self.mDegreeY);
     modelViewMatrix = GLKMatrix4RotateZ(modelViewMatrix, self.mDegreeZ);
-    
+
     self.mEffect.transform.modelviewMatrix = modelViewMatrix;
 }
 
