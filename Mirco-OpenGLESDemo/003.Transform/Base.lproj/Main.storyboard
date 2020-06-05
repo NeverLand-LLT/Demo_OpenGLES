@@ -11,10 +11,40 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="GLESView">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="LearnESView">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XZy-lr-f9D">
+                                <rect key="frame" x="20" y="67" width="76" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Lb7-hi-zhe"/>
+                                    <constraint firstAttribute="width" constant="76" id="gfw-ZW-geJ"/>
+                                </constraints>
+                                <state key="normal" title="changeX轴"/>
+                                <connections>
+                                    <action selector="clickXRate:" destination="8bC-Xf-vdC" eventType="touchUpInside" id="swi-U5-ZhD"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DbE-wm-Hna">
+                                <rect key="frame" x="116" y="67" width="75" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="5im-F4-BkM"/>
+                                    <constraint firstAttribute="width" constant="75" id="iRh-V4-sTx"/>
+                                </constraints>
+                                <state key="normal" title="changeY轴"/>
+                                <connections>
+                                    <action selector="clickYRate:" destination="8bC-Xf-vdC" eventType="touchUpInside" id="6wW-dV-mZK"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="DbE-wm-Hna" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="23" id="BVq-gS-G5P"/>
+                            <constraint firstItem="XZy-lr-f9D" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="23" id="HHc-9l-Xld"/>
+                            <constraint firstItem="XZy-lr-f9D" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="KFp-rY-Iq4"/>
+                            <constraint firstItem="DbE-wm-Hna" firstAttribute="leading" secondItem="XZy-lr-f9D" secondAttribute="trailing" constant="20" id="jiL-Ec-5Vg"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>

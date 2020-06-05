@@ -42,7 +42,6 @@
 		CD5F77352489E2110077AF4A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5F77342489E2110077AF4A /* main.m */; };
 		CD5F773F2489E2340077AF4A /* shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = CD5F773B2489E2340077AF4A /* shader.fsh */; };
 		CD5F77402489E2340077AF4A /* shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = CD5F773C2489E2340077AF4A /* shader.vsh */; };
-		CD5F77412489E2340077AF4A /* GLESView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5F773D2489E2340077AF4A /* GLESView.m */; };
 		CD5F77422489E2340077AF4A /* source.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CD5F773E2489E2340077AF4A /* source.jpg */; };
 		CD5F77532489E3890077AF4A /* GLESUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5F774D2489E3890077AF4A /* GLESUtils.m */; };
 		CD5F77542489E3890077AF4A /* GLESMath.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5F774F2489E3890077AF4A /* GLESMath.c */; };
@@ -54,6 +53,7 @@
 		CD5F776B2489E3AB0077AF4A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD5F77692489E3AB0077AF4A /* LaunchScreen.storyboard */; };
 		CD5F776E2489E3AB0077AF4A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5F776D2489E3AB0077AF4A /* main.m */; };
 		CD5F77732489E3CE0077AF4A /* source.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CD5F77722489E3CE0077AF4A /* source.jpg */; };
+		CDCA3E64248A331F003F619B /* LearnESView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDCA3E63248A331F003F619B /* LearnESView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -111,10 +111,8 @@
 		CD5F77312489E2110077AF4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CD5F77332489E2110077AF4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CD5F77342489E2110077AF4A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		CD5F773A2489E2340077AF4A /* GLESView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLESView.h; sourceTree = "<group>"; };
 		CD5F773B2489E2340077AF4A /* shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader.fsh; sourceTree = "<group>"; };
 		CD5F773C2489E2340077AF4A /* shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader.vsh; sourceTree = "<group>"; };
-		CD5F773D2489E2340077AF4A /* GLESView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLESView.m; sourceTree = "<group>"; };
 		CD5F773E2489E2340077AF4A /* source.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = source.jpg; sourceTree = "<group>"; };
 		CD5F774D2489E3890077AF4A /* GLESUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLESUtils.m; sourceTree = "<group>"; };
 		CD5F774E2489E3890077AF4A /* Quaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quaternion.h; sourceTree = "<group>"; };
@@ -135,6 +133,8 @@
 		CD5F776C2489E3AB0077AF4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CD5F776D2489E3AB0077AF4A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CD5F77722489E3CE0077AF4A /* source.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = source.jpg; sourceTree = "<group>"; };
+		CDCA3E62248A331F003F619B /* LearnESView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LearnESView.h; sourceTree = "<group>"; };
+		CDCA3E63248A331F003F619B /* LearnESView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LearnESView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,6 +243,8 @@
 				CD5F77122489E1B90077AF4A /* Resource */,
 				CD5F76F22489E1760077AF4A /* AppDelegate.h */,
 				CD5F76F32489E1760077AF4A /* AppDelegate.m */,
+				CD5F77132489E1B90077AF4A /* GLESView.h */,
+				CD5F77162489E1B90077AF4A /* GLESView.m */,
 				CD5F76F52489E1760077AF4A /* SceneDelegate.h */,
 				CD5F76F62489E1760077AF4A /* SceneDelegate.m */,
 				CD5F76F82489E1760077AF4A /* ViewController.h */,
@@ -259,10 +261,8 @@
 		CD5F77122489E1B90077AF4A /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				CD5F77132489E1B90077AF4A /* GLESView.h */,
 				CD5F77142489E1B90077AF4A /* shader.fsh */,
 				CD5F77152489E1B90077AF4A /* shader.vsh */,
-				CD5F77162489E1B90077AF4A /* GLESView.m */,
 				CD5F77172489E1B90077AF4A /* source.jpg */,
 			);
 			path = Resource;
@@ -275,6 +275,8 @@
 				CD5F77392489E2340077AF4A /* Resource */,
 				CD5F77222489E20F0077AF4A /* AppDelegate.h */,
 				CD5F77232489E20F0077AF4A /* AppDelegate.m */,
+				CDCA3E62248A331F003F619B /* LearnESView.h */,
+				CDCA3E63248A331F003F619B /* LearnESView.m */,
 				CD5F77252489E20F0077AF4A /* SceneDelegate.h */,
 				CD5F77262489E20F0077AF4A /* SceneDelegate.m */,
 				CD5F77282489E20F0077AF4A /* ViewController.h */,
@@ -293,8 +295,6 @@
 			children = (
 				CD5F773B2489E2340077AF4A /* shader.fsh */,
 				CD5F773C2489E2340077AF4A /* shader.vsh */,
-				CD5F773A2489E2340077AF4A /* GLESView.h */,
-				CD5F773D2489E2340077AF4A /* GLESView.m */,
 				CD5F773E2489E2340077AF4A /* source.jpg */,
 			);
 			path = Resource;
@@ -571,8 +571,8 @@
 				CD5F772A2489E20F0077AF4A /* ViewController.m in Sources */,
 				CD5F77242489E20F0077AF4A /* AppDelegate.m in Sources */,
 				CD5F77542489E3890077AF4A /* GLESMath.c in Sources */,
-				CD5F77412489E2340077AF4A /* GLESView.m in Sources */,
 				CD5F77352489E2110077AF4A /* main.m in Sources */,
+				CDCA3E64248A331F003F619B /* LearnESView.m in Sources */,
 				CD5F77532489E3890077AF4A /* GLESUtils.m in Sources */,
 				CD5F77272489E20F0077AF4A /* SceneDelegate.m in Sources */,
 			);

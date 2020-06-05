@@ -10,7 +10,6 @@
 
 #import "GLESView.h"
 #import <OpenGLES/ES2/gl.h>
-#import "GLESMath.h"
 
 @interface GLESView ()
 
@@ -29,19 +28,16 @@
 @end
 
 @implementation GLESView
-{
-    float degree;
-    float yDegree;
-    BOOL bX;
-    BOOL bY;
-    NSTimer *myTimer;
-}
 
 + (Class)layerClass {
     return [CAEAGLLayer class];
 }
 
 - (void)layoutSubviews {
+    /**
+    c语言编译流程：预编译、编译、汇编、链接
+    openGLES的流程主要分为。glCompileShader、glAttachShader、glLinkProgram
+     */
     [self setupLayer];
     [self setupContext];
     [self destoryRenderAndFrameBuffer];
@@ -107,20 +103,46 @@
 }
 
 - (void)render {
+    /**
+     1、为什么熊猫的反的？要如何解决？
+     2、在这个样例中，顶点着色器调用次数和片元着色器调用次数哪个多？
+     3、glsl里面的变量可以通过glUniform进行赋值，那么是否可以在编译成功后或者链接成功后直接进行赋值？
+
+     1.
+      为什么会翻转？ 是因为纹理的原点在左下角 与 顶点坐标有区别。 但是在GPUIMAge中是有处理，所以直接使用相同坐标。
+      在项目中，要解决上下翻转也很简单， 只需要 y = 1.0 - y
+      GLfloat vertexs[] =
+      {
+          0.5f,  -0.5f,  -1.0f,   1.0f,   1.0 - 0.0f,
+          -0.5f, 0.5f,   -1.0f,   0.0f,   1.0 - 1.0f,
+          -0.5f, -0.5f,  -1.0f,   0.0f,   1.0 - 0.0f,
+          0.5f,  0.5f,   -1.0f,   1.0f,   1.0 - 1.0f,
+          -0.5f, 0.5f,   -1.0f,   0.0f,   1.0 - 1.0f,
+          0.5f,  -0.5f,  -1.0f,   1.0f,   1.0 - 0.0f,
+      };
+
+     2.片元着色器。顶点着色器调用次数与“顶点数量”有关，片元着色器调用与光栅化后“像素”多少有关系。
+
+     3、一个一致变量在一个图元的绘制过程中是不会改变的，所以其值不能在glBegin/glEnd中设置。一致变量适合描述在一个图元中、一帧中甚至一个场景中都不变的值。一致变量在顶点shader和片断shader中都是只读的。首先你需要获得变量在内存中的位置，这个信息只有在连接程序之后才可获得。
+
+     作者：落影loyinglin
+     链接：https://www.jianshu.com/p/ee597b2bd399
+     来源：简书
+     著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+     作者：落影loyinglin
+     链接：https://www.jianshu.com/p/ee597b2bd399
+     来源：简书
+     著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+     */
     glClearColor(231 / 255.0, 230 / 255.0, 225 / 255.0, 1.0);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
 
     CGFloat scale = [[UIScreen mainScreen] scale];
     glViewport(self.frame.origin.x * scale,
                self.frame.origin.y * scale,
                self.frame.size.width * scale,
                self.frame.size.height * scale);
-
-    if (self.mProgram) {
-        // FIXME:  应该不需要每次删除program 的 0 0 ?
-        glDeleteProgram(self.mProgram);
-        _mProgram = 0;
-    }
 
     // 编译加载Shader
     _mProgram = [self loadShaders];
@@ -142,82 +164,66 @@
     NSLog(@"link program success !");
     glUseProgram(self.mProgram); // 指定GLProgram为当前Program ，每次使用OpenGL，需要保证执行的代码在自己的program中
 
-    GLuint indices[] =
-    {
-        0, 3, 2,
-        0, 1, 3,
-        0, 2, 4,
-        0, 4, 1,
-        2, 3, 4,
-        1, 4, 3,
-    };
+    //前三个是顶点坐标， 后面两个是纹理坐标
+//    GLfloat vertexs[] =
+//    {
+//        0.5f,  -0.5f,  -1.0f,   1.0f,   0.0f,
+//        -0.5f, 0.5f,   -1.0f,   0.0f,   1.0f,
+//        -0.5f, -0.5f,  -1.0f,   0.0f,   0.0f,
+//        0.5f,  0.5f,   -1.0f,   1.0f,   1.0f,
+//        -0.5f, 0.5f,   -1.0f,   0.0f,   1.0f,
+//        0.5f,  -0.5f,  -1.0f,   1.0f,   0.0f,
+//    };
 
+    /** 为什么会翻转？ 是因为纹理的原点在左下角 与 顶点坐标有区别。 但是在GPUIMAge中是有处理，所以直接使用相同坐标。
+     在项目中，要解决上下翻转也很简单， 只需要 y = 1.0 - y
+     */
     GLfloat vertexs[] =
     {
-        -0.5f, 0.5f,  0.0f,   0.0f, 0.0f, 0.5f,  0.0f, 1.0f,          //左上
-        0.5f,  0.5f,  0.0f,   0.0f, 0.5f, 0.0f,  1.0f, 1.0f,          //右上
-        -0.5f, -0.5f, 0.0f,   0.5f, 0.0f, 1.0f,  0.0f, 0.0f,          //左下
-        0.5f,  -0.5f, 0.0f,   0.0f, 0.0f, 0.5f,  1.0f, 0.0f,          //右下
-        0.0f,  0.0f,  1.0f,   1.0f, 1.0f, 1.0f,  0.5f, 0.5f,          //顶点
+        0.5f,  -0.5f,  -1.0f,   1.0f,   1.0 - 0.0f,
+        -0.5f, 0.5f,   -1.0f,   0.0f,   1.0 - 1.0f,
+        -0.5f, -0.5f,  -1.0f,   0.0f,   1.0 - 0.0f,
+        0.5f,  0.5f,   -1.0f,   1.0f,   1.0 - 1.0f,
+        -0.5f, 0.5f,   -1.0f,   0.0f,   1.0 - 1.0f,
+        0.5f,  -0.5f,  -1.0f,   1.0f,   1.0 - 0.0f,
     };
 
     // 上传顶点数据
-    GLuint vertexBufferObject;
-    glGenBuffers(1, &vertexBufferObject);  // VBO
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
+    GLuint vertexBuffer; // VBO
+    glGenBuffers(1, &vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertexs), vertexs, GL_STATIC_DRAW);
 
     GLuint position = glGetAttribLocation(self.mProgram, "position");
-    glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 8, (GLfloat *)NULL);
-    
+    glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 5, (GLfloat *)NULL);
     glEnableVertexAttribArray(position);
 
-    GLuint positionColor = glGetAttribLocation(self.mProgram, "positionColor");
-    glVertexAttribPointer(positionColor, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 8, (GLfloat *)NULL + 3);
-    glEnableVertexAttribArray(positionColor);
-
     GLuint textureCoordinate = glGetAttribLocation(self.mProgram, "textureCoordinate");
-    glVertexAttribPointer(textureCoordinate, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 8, (GLfloat *)NULL + 6);
+    glVertexAttribPointer(textureCoordinate, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 5, (GLfloat *)NULL + 3);
     glEnableVertexAttribArray(textureCoordinate);
 
     [self setupTexture:@"source.jpg"];
 
-    // Uniform
-    GLuint projectionMatrixSlot = glGetUniformLocation(self.mProgram, "projectionMatrix");
-    GLuint modelViewMatrixSlot = glGetUniformLocation(self.mProgram, "modelViewMatrix");
+    //获取shader里面的变量，这里记得要在glLinkProgram后面，后面，后面！
+    GLuint rotate = glGetUniformLocation(self.mProgram, "rotateMatrix");
 
-    float width = self.frame.size.width;
-    float height = self.frame.size.height;
+    float radians = 10 * 3.14159f / 180.0f;
+    float s = sin(radians);
+    float c = cos(radians);
 
-    KSMatrix4 _projectionMatrix;
-    ksMatrixLoadIdentity(&_projectionMatrix);
-    float aspect = width / height;    //长宽比
+    //z轴旋转矩阵
+    /*
+     OpenGLES是列主序矩阵，对于一个一维数组表示的二维矩阵，会先填满每一列（a[0][0]、a[1][0]、a[2][0]、a[3][0]）。
+     */
+    GLfloat zRotation[16] = {    //
+        c,   -s,   0, 0.2, //
+        s,   c,    0, 0,//
+        0,   0,    1.0, 0,//
+        0.0, 0,    0, 1.0 //
+    };
 
-    ksPerspective(&_projectionMatrix, 30.0, aspect, 5.0f, 20.0f);    //透视变换，视角30°
-
-    //设置glsl里面的投影矩阵
-    glUniformMatrix4fv(projectionMatrixSlot, 1, GL_FALSE, (GLfloat *)&_projectionMatrix.m[0][0]);
-
-    glEnable(GL_CULL_FACE);
-
-    KSMatrix4 _modelViewMatrix;
-    ksMatrixLoadIdentity(&_modelViewMatrix);
-
-    //平移
-    ksTranslate(&_modelViewMatrix, 0.0, 0.0, -10.0);
-    KSMatrix4 _rotationMatrix;
-    ksMatrixLoadIdentity(&_rotationMatrix);
-
-    //旋转
-    ksRotate(&_rotationMatrix, degree, 1.0, 0.0, 0.0);     //绕X轴
-    ksRotate(&_rotationMatrix, yDegree, 0.0, 1.0, 0.0);     //绕Y轴
-
-    //把变换矩阵相乘，注意先后顺序
-    ksMatrixMultiply(&_modelViewMatrix, &_rotationMatrix, &_modelViewMatrix);
-    //    ksMatrixMultiply(&_modelViewMatrix, &_modelViewMatrix, &_rotationMatrix);
-
-    // Load the model-view matrix
-    glUniformMatrix4fv(modelViewMatrixSlot, 1, GL_FALSE, (GLfloat *)&_modelViewMatrix.m[0][0]);
+    //设置旋转矩阵
+    glUniformMatrix4fv(rotate, 1, GL_FALSE, (GLfloat *)&zRotation[0]);
 
     glDrawArrays(GL_TRIANGLES, 0, 6);
 

@@ -1,24 +1,26 @@
 //
-//  GLESView.m
-//  OpenGLES02-Shader
+//  LearnESView.m
+//  003.Transform
 //
-//  Created by Melody on 2020/3/19.
+//  Created by GA-清理(Melody) on 2020/6/5.
 //  Copyright © 2020 Melody. All rights reserved.
 //
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
-#import "GLESView.h"
+#import "LearnESView.h"
 #import <OpenGLES/ES2/gl.h>
 
-@interface GLESView ()
+#import "GLESMath.h"
 
+@interface LearnESView ()
 /** OpenGLEST 上下文 */
 @property (nonatomic, strong) EAGLContext *mContext;
 /** OpenGLEST Layer */
 @property (nonatomic, strong) CAEAGLLayer *mEaglLayer;
 /** OpenGLEST programe */
 @property (nonatomic, assign) GLuint mProgram;
+@property (nonatomic, assign) GLuint myVertices;
 
 /** 渲染Buffer句柄 */
 @property (nonatomic, assign) GLuint mColorRenderBuffer;
@@ -27,7 +29,14 @@
 
 @end
 
-@implementation GLESView
+@implementation LearnESView
+{
+    float degree;
+    float yDegree;
+    BOOL bX;
+    BOOL bY;
+    NSTimer *myTimer;
+}
 
 + (Class)layerClass {
     return [CAEAGLLayer class];
@@ -41,6 +50,30 @@
     [self setupFrameBuffer];
     [self render];
 }
+
+#pragma mark - Action Methods
+
+- (IBAction)clickXRate:(id)sender {
+    if (!myTimer) {
+        myTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(onRes:) userInfo:nil repeats:YES];
+    }
+    bX = !bX;
+}
+
+- (IBAction)clickYRate:(id)sender {
+    if (!myTimer) {
+        myTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(onRes:) userInfo:nil repeats:YES];
+    }
+    bY = !bY;
+}
+
+- (void)onRes:(id)sender {
+    degree += bX * 5;
+    yDegree += bY * 5;
+    [self render];
+}
+
+#pragma mark - Render
 
 - (void)setupLayer {
     // 设置CAEAGLLayer
@@ -99,106 +132,105 @@
 }
 
 - (void)render {
-    /**
-     1、为什么熊猫的反的？要如何解决？
-     2、在这个样例中，顶点着色器调用次数和片元着色器调用次数哪个多？
-     3、glsl里面的变量可以通过glUniform进行赋值，那么是否可以在编译成功后或者链接成功后直接进行赋值？
-
-     1.纹理坐标在左下角
-     2.片元着色器。顶点着色器调用次数与“顶点数量”有关，片元着色器调用与光栅化后“像素”多少有关系。
-     作者：落影loyinglin
-     链接：https://www.jianshu.com/p/ee597b2bd399
-     来源：简书
-     著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
-     */
-    glClearColor(231 / 255.0, 230 / 255.0, 225 / 255.0, 1.0);
+    glClearColor(0, 0.0, 0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
 
     CGFloat scale = [[UIScreen mainScreen] scale];
-    glViewport(self.frame.origin.x * scale,
-               self.frame.origin.y * scale,
-               self.frame.size.width * scale,
-               self.frame.size.height * scale);
+    glViewport(self.frame.origin.x * scale, self.frame.origin.y * scale, self.frame.size.width * scale, self.frame.size.height * scale);
 
-    // 编译加载Shader
-    _mProgram = [self loadShaders];
+    if (self.mProgram) {
+        //        if (![self validate:self.myProgram]) {
+        //            NSLog(@"Failed to validate program: %d", self.myProgram);
+        //        }
+        glDeleteProgram(self.mProgram);
+        self.mProgram = 0;
+    }
+    self.mProgram = [self loadShaders];
 
-    //链接
     glLinkProgram(self.mProgram);
-    GLint linkSucess;
-    glGetProgramiv(self.mProgram, GL_LINK_STATUS, &linkSucess);
+    GLint linkSuccess;
+    glGetProgramiv(self.mProgram, GL_LINK_STATUS, &linkSuccess);
+    if (linkSuccess == GL_FALSE) {
+        GLchar messages[256];
+        glGetProgramInfoLog(self.mProgram, sizeof(messages), 0, &messages[0]);
+        NSString *messageString = [NSString stringWithUTF8String:messages];
+        NSLog(@"error%@", messageString);
 
-    if (linkSucess == GL_FALSE) {
-        // 链接失败
-        GLchar message[256];
-        glGetProgramInfoLog(self.mProgram, sizeof(message), 0, &message[0]);
-        NSString *messageString = [NSString stringWithUTF8String:message];
-        NSLog(@"link program error:%@", messageString);
-        exit(1);
+        return;
+    } else {
+        glUseProgram(self.mProgram);
     }
 
-    NSLog(@"link program success !");
-    glUseProgram(self.mProgram); // 指定GLProgram为当前Program ，每次使用OpenGL，需要保证执行的代码在自己的program中
-
-    //前三个是顶点坐标， 后面两个是纹理坐标
-//    GLfloat vertexs[] =
-//    {
-//        0.5f,  -0.5f,  -1.0f,   1.0f,   0.0f,
-//        -0.5f, 0.5f,   -1.0f,   0.0f,   1.0f,
-//        -0.5f, -0.5f,  -1.0f,   0.0f,   0.0f,
-//        0.5f,  0.5f,   -1.0f,   1.0f,   1.0f,
-//        -0.5f, 0.5f,   -1.0f,   0.0f,   1.0f,
-//        0.5f,  -0.5f,  -1.0f,   1.0f,   0.0f,
-//    };
-
-    /** 为什么会翻转？ 是因为纹理的原点在左下角 与 顶点坐标有区别。 但是在GPUIMAge中是有处理，所以直接使用相同坐标。
-     在项目中，要解决上下翻转也很简单， 只需要 y = 1.0 - y
-     */
-    GLfloat vertexs[] =
+    GLuint indices[] =
     {
-        0.5f,  -0.5f,  -1.0f,   1.0f,   1.0 - 0.0f,
-        -0.5f, 0.5f,   -1.0f,   0.0f,   1.0 - 1.0f,
-        -0.5f, -0.5f,  -1.0f,   0.0f,   1.0 - 0.0f,
-        0.5f,  0.5f,   -1.0f,   1.0f,   1.0 - 1.0f,
-        -0.5f, 0.5f,   -1.0f,   0.0f,   1.0 - 1.0f,
-        0.5f,  -0.5f,  -1.0f,   1.0f,   1.0 - 0.0f,
+        0, 3, 2,
+        0, 1, 3,
+        0, 2, 4,
+        0, 4, 1,
+        2, 3, 4,
+        1, 4, 3,
     };
 
-    // 上传顶点数据
-    GLuint vertexBuffer; // VBO
-    glGenBuffers(1, &vertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexs), vertexs, GL_STATIC_DRAW);
+    if (self.myVertices == 0) {
+        glGenBuffers(1, &_myVertices);
+    }
+    GLfloat attrArr[] =
+    {
+        -0.5f, 0.5f,   0.0f,  1.0f, 0.0f, 1.0f,       //左上
+        0.5f,  0.5f,   0.0f,  1.0f, 0.0f, 1.0f,       //右上
+        -0.5f, -0.5f,  0.0f,  1.0f, 1.0f, 1.0f,       //左下
+        0.5f,  -0.5f,  0.0f,  1.0f, 1.0f, 1.0f,       //右下
+        0.0f,  0.0f,   1.0f,  0.0f, 1.0f, 0.0f,      //顶点
+    };
+    glBindBuffer(GL_ARRAY_BUFFER, _myVertices);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(attrArr), attrArr, GL_DYNAMIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, _myVertices);
 
     GLuint position = glGetAttribLocation(self.mProgram, "position");
-    glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 5, (GLfloat *)NULL);
+    glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 6, NULL);
     glEnableVertexAttribArray(position);
 
-    GLuint textureCoordinate = glGetAttribLocation(self.mProgram, "textureCoordinate");
-    glVertexAttribPointer(textureCoordinate, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 5, (GLfloat *)NULL + 3);
-    glEnableVertexAttribArray(textureCoordinate);
+    GLuint positionColor = glGetAttribLocation(self.mProgram, "positionColor");
+    glVertexAttribPointer(positionColor, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 6, (float *)NULL + 3);
+    glEnableVertexAttribArray(positionColor);
 
-    [self setupTexture:@"source.jpg"];
+    GLuint projectionMatrixSlot = glGetUniformLocation(self.mProgram, "projectionMatrix");
+    GLuint modelViewMatrixSlot = glGetUniformLocation(self.mProgram, "modelViewMatrix");
 
-    //获取shader里面的变量，这里记得要在glLinkProgram后面，后面，后面！
-    GLuint rotate = glGetUniformLocation(self.mProgram, "rotateMatrix");
+    float width = self.frame.size.width;
+    float height = self.frame.size.height;
 
-    float radians = 10 * 3.14159f / 180.0f;
-    float s = sin(radians);
-    float c = cos(radians);
+    KSMatrix4 _projectionMatrix;
+    ksMatrixLoadIdentity(&_projectionMatrix);
+    float aspect = width / height;     //长宽比
 
-    //z轴旋转矩阵
-    GLfloat zRotation[16] = {    //
-        c,   -s,   0, 0.2, //
-        s,   c,    0, 0,//
-        0,   0,    1.0, 0,//
-        0.0, 0,    0, 1.0 //
-    };
+    ksPerspective(&_projectionMatrix, 30.0, aspect, 5.0f, 20.0f);     //透视变换，视角30°
 
-    //设置旋转矩阵
-    glUniformMatrix4fv(rotate, 1, GL_FALSE, (GLfloat *)&zRotation[0]);
+    //设置glsl里面的投影矩阵
+    glUniformMatrix4fv(projectionMatrixSlot, 1, GL_FALSE, (GLfloat *)&_projectionMatrix.m[0][0]);
 
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glEnable(GL_CULL_FACE);
+
+    KSMatrix4 _modelViewMatrix;
+    ksMatrixLoadIdentity(&_modelViewMatrix);
+
+    //平移
+    ksTranslate(&_modelViewMatrix, 0.0, 0.0, -10.0);
+    KSMatrix4 _rotationMatrix;
+    ksMatrixLoadIdentity(&_rotationMatrix);
+
+    //旋转
+    ksRotate(&_rotationMatrix, degree, 1.0, 0.0, 0.0);     //绕X轴
+    ksRotate(&_rotationMatrix, yDegree, 0.0, 1.0, 0.0);     //绕Y轴
+
+    //把变换矩阵相乘，注意先后顺序
+    ksMatrixMultiply(&_modelViewMatrix, &_rotationMatrix, &_modelViewMatrix);
+    //    ksMatrixMultiply(&_modelViewMatrix, &_modelViewMatrix, &_rotationMatrix);
+
+    // Load the model-view matrix
+    glUniformMatrix4fv(modelViewMatrixSlot, 1, GL_FALSE, (GLfloat *)&_modelViewMatrix.m[0][0]);
+
+    glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(indices[0]), GL_UNSIGNED_INT, indices);
 
     [self.mContext presentRenderbuffer:GL_RENDERBUFFER];
 }
