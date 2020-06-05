@@ -47,13 +47,13 @@
 		CD5F77542489E3890077AF4A /* GLESMath.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5F774F2489E3890077AF4A /* GLESMath.c */; };
 		CD5F775D2489E3A90077AF4A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5F775C2489E3A90077AF4A /* AppDelegate.m */; };
 		CD5F77602489E3AA0077AF4A /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5F775F2489E3AA0077AF4A /* SceneDelegate.m */; };
-		CD5F77632489E3AA0077AF4A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5F77622489E3AA0077AF4A /* ViewController.m */; };
 		CD5F77662489E3AA0077AF4A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD5F77642489E3AA0077AF4A /* Main.storyboard */; };
 		CD5F77682489E3AB0077AF4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD5F77672489E3AB0077AF4A /* Assets.xcassets */; };
 		CD5F776B2489E3AB0077AF4A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD5F77692489E3AB0077AF4A /* LaunchScreen.storyboard */; };
 		CD5F776E2489E3AB0077AF4A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5F776D2489E3AB0077AF4A /* main.m */; };
 		CD5F77732489E3CE0077AF4A /* source.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CD5F77722489E3CE0077AF4A /* source.jpg */; };
 		CDCA3E64248A331F003F619B /* LearnESView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDCA3E63248A331F003F619B /* LearnESView.m */; };
+		CDCA3E67248A3D65003F619B /* YZGLViewContrller.m in Sources */ = {isa = PBXBuildFile; fileRef = CDCA3E66248A3D65003F619B /* YZGLViewContrller.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -125,8 +125,6 @@
 		CD5F775C2489E3A90077AF4A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		CD5F775E2489E3A90077AF4A /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
 		CD5F775F2489E3AA0077AF4A /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
-		CD5F77612489E3AA0077AF4A /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		CD5F77622489E3AA0077AF4A /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		CD5F77652489E3AA0077AF4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CD5F77672489E3AB0077AF4A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CD5F776A2489E3AB0077AF4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -135,6 +133,8 @@
 		CD5F77722489E3CE0077AF4A /* source.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = source.jpg; sourceTree = "<group>"; };
 		CDCA3E62248A331F003F619B /* LearnESView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LearnESView.h; sourceTree = "<group>"; };
 		CDCA3E63248A331F003F619B /* LearnESView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LearnESView.m; sourceTree = "<group>"; };
+		CDCA3E65248A3D65003F619B /* YZGLViewContrller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YZGLViewContrller.h; sourceTree = "<group>"; };
+		CDCA3E66248A3D65003F619B /* YZGLViewContrller.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YZGLViewContrller.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -321,8 +321,8 @@
 				CD5F775C2489E3A90077AF4A /* AppDelegate.m */,
 				CD5F775E2489E3A90077AF4A /* SceneDelegate.h */,
 				CD5F775F2489E3AA0077AF4A /* SceneDelegate.m */,
-				CD5F77612489E3AA0077AF4A /* ViewController.h */,
-				CD5F77622489E3AA0077AF4A /* ViewController.m */,
+				CDCA3E65248A3D65003F619B /* YZGLViewContrller.h */,
+				CDCA3E66248A3D65003F619B /* YZGLViewContrller.m */,
 				CD5F77642489E3AA0077AF4A /* Main.storyboard */,
 				CD5F77672489E3AB0077AF4A /* Assets.xcassets */,
 				CD5F77692489E3AB0077AF4A /* LaunchScreen.storyboard */,
@@ -582,7 +582,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD5F77632489E3AA0077AF4A /* ViewController.m in Sources */,
+				CDCA3E67248A3D65003F619B /* YZGLViewContrller.m in Sources */,
 				CD5F775D2489E3A90077AF4A /* AppDelegate.m in Sources */,
 				CD5F776E2489E3AB0077AF4A /* main.m in Sources */,
 				CD5F77602489E3AA0077AF4A /* SceneDelegate.m in Sources */,
