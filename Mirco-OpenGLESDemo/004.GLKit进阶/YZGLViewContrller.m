@@ -43,7 +43,7 @@
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
 
     [EAGLContext setCurrentContext:self.mContext];
-    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST); // 开启深度测试，不然会出现背面剔除
 
     //新的图形
     [self renderNew];
@@ -94,6 +94,7 @@
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"source.jpg" ofType:nil];
 
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:@(1), GLKTextureLoaderOriginBottomLeft, nil];
+   // GLKTextureLoaderOriginBottomLeft 参数是避免纹理上下颠倒，原因是纹理坐标系和世界坐标系的原点不同。
     GLKTextureInfo *textureInfo = [GLKTextureLoader textureWithContentsOfFile:filePath options:options error:nil];
 
     //着色器
