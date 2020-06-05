@@ -10,7 +10,6 @@
 
 #import "GLESView.h"
 #import <OpenGLES/ES2/gl.h>
-#import "GLESUtils.h"
 #import "GLESMath.h"
 
 @interface GLESView ()
@@ -155,7 +154,7 @@
 
     GLfloat vertexs[] =
     {
-        -0.5f, 0.5f,  0.0f,   0.0f, 0.0f, 0.5f,  0.0f, 1.0f,    //左上
+        -0.5f, 0.5f,  0.0f,   0.0f, 0.0f, 0.5f,  0.0f, 1.0f,          //左上
         0.5f,  0.5f,  0.0f,   0.0f, 0.5f, 0.0f,  1.0f, 1.0f,          //右上
         -0.5f, -0.5f, 0.0f,   0.5f, 0.0f, 1.0f,  0.0f, 0.0f,          //左下
         0.5f,  -0.5f, 0.0f,   0.0f, 0.0f, 0.5f,  1.0f, 0.0f,          //右下
