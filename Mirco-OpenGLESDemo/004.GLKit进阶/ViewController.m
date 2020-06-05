@@ -68,7 +68,6 @@
     [EAGLContext setCurrentContext:self.mContext];
     glEnable(GL_DEPTH_TEST); ///!!!
 
-//    self.view.backgroundColor = [UIColor orangeColor];
 }
 
 - (void)uploadVertexArray {

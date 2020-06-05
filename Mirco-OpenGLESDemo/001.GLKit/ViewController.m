@@ -23,8 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    
+
     // 1.设置OpenGLES 配置
     [self setupConfig];
     //2. 加载顶点数据
@@ -38,6 +37,110 @@
      1、代码中有6个顶点坐标，能否使用更少的顶点显示一个图像？
      2、顶点缓存数组可以不用glBufferData，要如何实现？
      3、如果把这个图变成左右两只对称的熊猫，该如何改？
+
+
+     1.
+     GLfloat vertexData[] = {
+          -0.5, -0.5,  0.0f,    0.0f, 0.0f, //左下
+          0.5,  -0.5,  0.0f,    1.0f, 0.0f, //右下
+          -0.5, 0.5,   0.0f,    0.0f, 1.0f, //左上
+          0.5,  0.5,   -0.0f,   1.0f, 1.0f, //右上
+      };
+     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+     //===============
+     glElement
+
+     - (void)uploadVertexArray {
+     //顶点数据，前三个是顶点坐标，后面两个是纹理坐标
+     GLfloat squareVertexData[] =
+     {
+     0.5, -0.5, 0.0f, 1.0f, 0.0f, //右下
+     0.5, 0.5, -0.0f, 1.0f, 1.0f, //右上
+     -0.5, 0.5, 0.0f, 0.0f, 1.0f, //左上
+     -0.5, -0.5, 0.0f, 0.0f, 0.0f, //左下
+     };
+     GLbyte indices[] =
+     {
+     0,1,2,
+     2,3,0
+     };
+
+
+     //顶点数据缓存
+     GLuint buffer;
+     glGenBuffers(1, &buffer);
+     glBindBuffer(GL_ARRAY_BUFFER, buffer);
+     glBufferData(GL_ARRAY_BUFFER, sizeof(squareVertexData), squareVertexData, GL_STATIC_DRAW);
+
+     GLuint texturebuffer;
+     glGenBuffers(1, &texturebuffer);
+     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, texturebuffer);
+     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+     glEnableVertexAttribArray(GLKVertexAttribPosition); //顶点数据缓存
+     glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 5, (GLfloat *)NULL + 0);
+
+     glEnableVertexAttribArray(GLKVertexAttribTexCoord0); //纹理
+     glVertexAttribPointer(GLKVertexAttribTexCoord0, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 5, (GLfloat *)NULL + 3);
+     }
+
+     - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect {
+     glClearColor(0.3f, 0.6f, 1.0f, 1.0f);
+     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+     //启动着色器
+     [self.mEffect prepareToDraw];
+     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, 0);
+     }
+
+     2.
+     ===========
+     static const GLfloat imageVertices[] = {
+          -1.0f, -1.0f,
+          1.0f,  -1.0f,
+          -1.0f, 1.0f,
+          1.0f,  1.0f,
+      };
+
+      static const GLfloat noRotationTextureCoordinates[] = {
+          0.0f, 0.0f,
+          1.0f, 0.0f,
+          0.0f, 1.0f,
+          1.0f, 1.0f,
+      };
+
+      glEnableVertexAttribArray(GLKVertexAttribPosition);
+      glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, imageVertices);
+
+      glEnableVertexAttribArray(GLKVertexAttribTexCoord0);
+      glVertexAttribPointer(GLKVertexAttribTexCoord0, 2, GL_FLOAT, GL_FALSE, 0, noRotationTextureCoordinates);
+
+     // 绘制 指定TRIANGLES 图元
+     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+     =================
+
+     3/
+
+     GLfloat vertexData[] = {
+           0.0,  -0.5,  0.0f,    1.0f, 0.0f,  //右下
+           0.0,  0.5,   -0.0f,   1.0f, 1.0f,  //右上
+           -1.0, 0.5,   0.0f,    0.0f, 1.0f, //左上
+           0.0,  -0.5,  0.0f,    1.0f, 0.0f, //右下
+           -1.0, 0.5,   0.0f,    0.0f, 1.0f,//左上
+           -1.0, -0.5,  0.0f,    0.0f, 0.0f, //左下
+
+           1.0,  -0.5,  0.0f,    1.0 - 1.0f, 0.0f,  //右下
+           1.0,  0.5,   -0.0f,   1.0 - 1.0f, 1.0f,      //右上
+           0.0,  0.5,   0.0f,    1.0 - 0.0f, 1.0f,    //左上
+           1.0,  -0.5,  0.0f,    1.0 - 1.0f, 0.0f,     //右下
+           0.0,  0.5,   0.0f,    1.0 - 0.0f, 1.0f,   //左上
+           0.0,  -0.5,  0.0f,    1.0 - 0.0f, 0.0f,    //左下
+
+       };
+
+        // 绘制 指定TRIANGLES 图元
+        glDrawArrays(GL_TRIANGLES, 0, 12);
      */
 }
 
@@ -68,8 +171,7 @@
         -0.5, -0.5,  0.0f,    0.0f, 0.0f, //左下
     };
 
-    /* 上传顶点数据缓存
-     OpenGLES render 一般需要 顶点数据 以及 纹理数据。
+    /* 上传顶点数据缓存  OpenGLES render 需要 顶点数据 以及 纹理数据。
      一般情况下，顶点数据包含 顶点坐标Vertexs 以及 纹理坐标TextureCoordinates(如果需要渲染纹理的话)。
      而上传顶点数据有两种方式：
      1、通过glBufferData 在GPU中开辟一个缓存存储着。
@@ -135,7 +237,7 @@
     [self.mEffect prepareToDraw];
 
     // 绘制 指定TRIANGLES 图元
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glDrawArrays(GL_TRIANGLES, 0, 6.0);
 }
 
 #pragma clang diagnostic pop
