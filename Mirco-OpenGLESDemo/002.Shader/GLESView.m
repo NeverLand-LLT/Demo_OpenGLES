@@ -85,7 +85,7 @@
 
 - (void)setupRenderBuffer {
     GLuint buffer;
-    glGenRenderbuffers(1, &buffer);
+    glGenRenderbuffers(1, &buffer); // 注意：返回的 id 不会为0，id 0 是OpenGL ES 保留的，我们也不能使用 id 为0的 renderbuffer。
     _mColorRenderBuffer = buffer;
     glBindRenderbuffer(GL_RENDERBUFFER, self.mColorRenderBuffer);
     // 为颜色缓冲区分配存储空间
